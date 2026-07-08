@@ -65,4 +65,6 @@ def salvar_orcamento():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # O Render exige que o app use uma porta dinâmica definida pelo sistema
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
