@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C-IA Dev | Soluções Digitais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f6;
+        }
+
+        /* Header */
+        header {
+            background: #000;
+            color: #FF8C00;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #FF8C00;
+            flex: 1;
+        }
+        header img {
+            height: 15%;
+            width: 15%;
+        }
+
+
+        nav a {
+            color: #FF8C00;
+            text-decoration: none;
+            margin-left: 10px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                        url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background: #FF8C00;
+            color: #000;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #00d4ff;
+            transform: scale(1.05);
+        }
+
+        /* Sobre e Desenvolvimento */
+        section {
+            padding: 4rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-style: bold ;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #000;
+            font-style: bold;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Tecnologias */
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 2rem;
+        }
+
+        .tech-badge {
+            background: #000;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+        }
+     
+        /* --- ESTILOS DO CHAT FLUTUANTE --- */
+        #chat-widget {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2000;
+        }
+
+        #chat-button {
+            background: #00d4ff;
+            color: #1a1a2e;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #chat-window {
+            display: none;
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 320px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: #1a1a2e;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chat-body {
+            height: 350px;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+
+        .chat-msg {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .bot-msg { background: #e1f5fe; align-self: flex-start; }
+
+        .chat-options button {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 5px;
+            background: #fff;
+            border: 1px solid #00d4ff;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        #chat-content input, #chat-content textarea {
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 0.8rem;
+        }
+
+        .chat-options button:hover { background: #00d4ff; color: white; }
+
+        .close-chat { cursor: pointer; }
+    </style>
+</head>
+<body>
+        <header>
+            <img src="static/Logo Capa.png">
+            <div class="logo">C-IA DEV SOLUÇÕES</div>
+            <nav>
+                <a href="#sobre">Sobre</a>
+                <a href="#tecnologias">Tecnologias</a>
+                <a href="#contato">Contato</a>
+            </nav>
+        </header>
+    
+        <section class="hero">
+            <h1>Inovação para o seu Negócio</h1>
+            <p>Desenvolvemos aplicativos personalizados que automatizam processos e aumentam as vendas do seu comércio ou pequena empresa.</p>
+            <button onclick="toggleChat(answer('orcamento'))"  class="btn">Solicitar Orçamento</button>
+        </section>
+    
+        <section id="sobre">
+            <div class="section-title">
+                <h2>Quem é a C-IA Dev?</h2>
+                <p>Especialistas em transformar ideias em produtos digitais de alta performance.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Foco no Pequeno Empreendedor</h3>
+                    <p>Entendemos os desafios de gerir um comércio. Nossas soluções são feitas sob medida para facilitar o seu dia a dia, desde controle de estoque até vendas online.</p>
+                </div>
+                <div class="card">
+                    <h3>Desenvolvimento Ágil</h3>
+                    <p>Nosso processo de criação de produtos foca em entregas rápidas e funcionais, garantindo que você tenha o seu software rodando no menor tempo possível.</p>
+                </div>
+            </div>
+        </section>
+    
+        <section id="tecnologias" style="background-color: #fff;">
+            <div class="section-title">
+                <h2>Nossa Stack Tecnológica</h2>
+                <p>Utilizamos as ferramentas mais modernas do mercado para garantir segurança e escalabilidade.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Frontend</h3>
+                    <p>Interfaces intuitivas e responsivas criadas com <strong>HTML5, CSS3 e JavaScript</strong>, garantindo que seu app funcione bem em qualquer celular ou computador.</p>
+                </div>
+                <div class="card">
+                    <h3>Backend & Robusteza</h3>
+                    <p>Utilizamos <strong>Python</strong> para inteligência e rapidez, e <strong>Java com Spring Boot</strong> para sistemas que exigem máxima segurança e estabilidade bancária.</p>
+                </div>
+            </div>
+            <div class="tech-list">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">HTML5</span>
+                <span class="tech-badge">CSS3</span>
+                <span class="tech-badge">JavaScript</span>
+                <span class="tech-badge">Java</span>
+                <span class="tech-badge">Wordpress</span>
+            </div>
+        </section>
+    
+        <section id="contato">
+            <div class="section-title">
+                <h2>Vamos Conversar?</h2>
+                <strong>Traga sua ideia e nós cuidamos do código.</strong>
+                <br>
+                <br>
+                <strong>Use o chat à esquerda para tirar suas dúvidas rapidamente!</strong>
+            </div>
+        </section>
+        <section style="padding: 100px 5%; text-align: center;">
+            
+        </section>
+    
+        <footer>
+            <p>&copy; 2026 C-IA Dev - Soluções de Software Personalizadas.</p>
+        </footer>
+
+    <div id="chat-widget">
+        <button id="chat-button" onclick="toggleChat()">💬</button>
+        
+        <div id="chat-window">
+            <div class="chat-header">
+                Atendimento C-IA Dev
+                <span class="close-chat" onclick="toggleChat()">✖</span>
+            </div>
+            <div class="chat-body" id="chat-content">
+                <div class="chat-msg bot-msg">Olá! Sou o assistente da C-IA Dev. Como posso te ajudar hoje?</div>
+                <div class="chat-options">
+                    <button onclick="answer('horario')">🕒 Horário de Atendimento</button>
+                    <button onclick="answer('local')">📍 Localização</button>
+                    <button onclick="answer('srv')">⚙️ Serviços</button>
+                    <button onclick="answer('tech')">💻 Tecnologias</button>
+                    <button onclick="answer('devs')">👥 Desenvolvedores</button>
+                    <button onclick="answer('mvv')">🚀 Missão, Visão e Valores</button>
+                    <button onclick="answer('orcamento')">💰 Solicitar Orçamento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleChat() {
+        const chat = document.getElementById('chat-window');
+        chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function appendMsg(texto, tipo = 'bot-msg') {
+    const chatContent = document.getElementById('chat-content');
+    const novaMensagem = document.createElement('div');
+    novaMensagem.className = 'chat-msg ' + tipo;
+    novaMensagem.innerHTML = texto;
+    chatContent.appendChild(novaMensagem); // Adiciona sem apagar o resto
+    chatContent.scrollTop = chatContent.scrollHeight;
+}
+
+
+    function answer(topic) {
+        if(topic === 'orcamento') {
+            appendMsg("<strong>Solicitação de Orçamento</strong><br>Por favor, preencha os campos abaixo:", 'bot-msg');
+            
+            // Cria os campos de formulário dentro do chat
+            const formHtml = `
+                <div class="chat-form" style="background: #eee; padding: 10px; border-radius: 5px; margin-top: 5px;">
+                    <input type="email" id="user-email" placeholder="Seu e-mail" style="width:100%; margin-bottom:5px; padding:5px;">
+                    <textarea id="user-desc" placeholder="Descrição do projeto" style="width:100%; height:60px; padding:5px;"></textarea>
+                    <button onclick="salvarOrcamento()" style="width:100%; background:#1a1a2e; color:white; border:none; padding:8px; cursor:pointer;">Enviar Pedido</button>
+                </div>
+            `;
+            appendMsg(formHtml, 'bot-msg');
+        } else {
+            let response = "";
+            switch(topic) {
+                case 'horario': response = "Nosso horário de atendimento é de <strong>Segunda a Sexta, das 7:30 às 20:00</strong>.";; break;
+                case 'local': response = "Estamos localizados na <strong>Rua Luis Furlan, 245 - Santa Bárbara D'Oeste/SP</strong>."; break;
+                case 'srv': response = "Nós prestamos serviços expecializados: <strong>Suporte Técnico, Manutenção de Computadores, Desenvolvimento de Aplicações, Planilhas e Dashboards estratégicos e Criação de Sites comerciais estáticos e dinâmicos</strong>."; break;
+                case 'tech': response = "Dominamos as melhores stacks: <strong>Python, HTML, CSS, JS, Java e Wordpress. </strong>Além da análise de dados estratégica utilizando: <strong>Excel, Access, PowerBI e várias outras bases de dados.</strong>"; break;
+                case 'devs': response = "Sua solução será construída pelo especialista em segurança da informação e infraestrutura: <strong>Vinicius Thomazelli.</strong> Formado em Gestão de Marketing e Segurança da Informação."; break;
+                case 'mvv': response = "<strong>Missão:</strong> Democratizar a tecnologia para pequenos comércios.<br><strong>Visão:</strong> Ser a principal referência em gestão e segurança da informação da região.<br><strong>Valores:</strong> Transparência, inovação constante e foco no sucesso do cliente."; break;
+            }
+            appendMsg(response);
+        }
+    }
+
+    function salvarOrcamento() {
+    // 1. Capturamos os campos e o container do formulário
+    const emailValue = document.getElementById('user-email').value;
+    const descValue = document.getElementById('user-desc').value;
+    const chatContent = document.getElementById('chat-content');
+
+    // Validação básica
+    if(!emailValue || !descValue) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+    }
+
+    // 2. LOGICA "ENVIANDO...":
+    // Vamos limpar o formulário e mostrar uma mensagem de espera
+    // Isso evita que o usuário envie o mesmo pedido várias vezes
+    chatContent.innerHTML += `<div id="status-envio" class="chat-msg bot-msg" style="background: #fff3cd; color: #856404;">
+                                ✅ **Pedido enviado com sucesso!**
+                              </div>`;
+
+    // Rola para o final para mostrar o status
+    chatContent.scrollTop = chatContent.scrollHeight;
+
+    // 3. Enviamos os dados para o Flask (Backend)
+    fetch('/salvar_orcamento', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            email: emailValue,
+            descricao: descValue
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === "sucesso") {
+            // 4. LIMPEZA E REINÍCIO
+            // Removemos tudo (inclusive o aviso de "Processando")
+            chatContent.innerHTML = '';
+
+            // Mensagem Final de Sucesso
+            appendMsg("✅ **Pedido enviado com sucesso!**", 'bot-msg');
+            appendMsg("O arquivo foi gerado e os desenvolvedores **Vinicius e Albert** foram notificados.", 'bot-msg');
+
+            // 5. VOLTAR AO MENU INICIAL (após 2 segundos)
+            setTimeout(() => {
+                appendMsg("Posso te ajudar com algo mais?");
+                const menuInicial = `
+                    <div class="chat-options">
+                        <button onclick="answer('horario')">🕒 Horário</button>
+                        <button onclick="answer('local')">📍 Localização</button>
+                        <button onclick="answer('orcamento')">💰 Novo Orçamento</button>
+                    </div>
+                `;
+                appendMsg(menuInicial);
+            }, 2000);
+
+        } else {
+            // Caso o servidor Python retorne um erro
+            const statusEnvio = document.getElementById('status-envio');
+            if(statusEnvio) statusEnvio.remove();
+            appendMsg("❌ Erro ao salvar. Verifique sua conexão.", 'bot-msg');
+        }
+    })
+    .catch(error => {
+        // Caso ocorra um erro de rede (servidor desligado, por exemplo)
+        console.error('Erro:', error);
+        const statusEnvio = document.getElementById('status-envio');
+        if(statusEnvio) statusEnvio.remove();
+        appendMsg("❌ O servidor não respondeu. O Python está rodando?", 'bot-msg');
+    });
+}
+
+
+    </script>
+
+    <footer>
+        <p>&copy; 2026 C-IA Dev Soluções</p>
+    </footer>
+
+</body>
+</html>
